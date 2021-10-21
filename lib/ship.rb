@@ -6,18 +6,18 @@ class Ship
   def initialize(size, name, direction = nil)
     @size = size
     @name = name
-    @hit_times = size
+    @lives = size
     @direction = direction || DIRECTIONS.sample
   end
 
   def hit!
-    fail('Ship has already been sunk') if @hit_times.zero?
+    fail('Ship has already been sunk') if sunk?
 
-    @hit_times -= 1
+    @lives -= 1
   end
 
   def sunk?
-    @hit_times.zero?
+    @lives.zero?
   end
 
   def vertical?

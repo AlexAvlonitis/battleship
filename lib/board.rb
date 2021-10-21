@@ -1,36 +1,12 @@
+require_relative 'cell'
+require_relative 'ship'
+require_relative 'fleet'
+
 class Board
   attr_reader :grid
 
   def self.build(grid_size = 10)
-    new(Cell, fleet, grid_size)
-  end
-
-  def self.fleet
-    {
-      carrier: [Ship.new(5, :carrier)],
-      battleship: [
-        Ship.new(4, :battleship),
-        Ship.new(4, :battleship)
-      ],
-      cruiser: [
-        Ship.new(3, :cruiser),
-        Ship.new(3, :cruiser),
-        Ship.new(3, :cruiser)
-      ],
-      submarine: [
-        Ship.new(3, :submarine),
-        Ship.new(3, :submarine),
-        Ship.new(3, :submarine),
-        Ship.new(3, :submarine)
-      ],
-      destroyer: [
-        Ship.new(2, :destroyer),
-        Ship.new(2, :destroyer),
-        Ship.new(2, :destroyer),
-        Ship.new(2, :destroyer),
-        Ship.new(2, :destroyer)
-      ]
-    }
+    new(Cell, Fleet.build, grid_size)
   end
 
   def initialize(cell_klass, fleet, grid_size)
@@ -40,8 +16,9 @@ class Board
     @grid = initialize_grid
   end
 
-  def place_ship(ship_name, y:, x:)
-    ship = fleet[ship_name].pop
+  def place_ship(ship_name, y, x)
+    ship = fleet.to_battle(ship_name)
+    fail('All ships have been deployed') if fleet.all_deployed?
     fail('Add a different ship') unless ship
 
     place_ship_vertically(ship, y, x) if ship.vertical?
@@ -64,7 +41,7 @@ class Board
 
   # grid_size * grid_size
   def initialize_grid
-    Array.new(grid_size) { Array.new(grid_size, cell_klass.new) }
+    Array.new(grid_size) { Array.new(grid_size) { cell_klass.new } }
   end
 
   def place_ship_vertically(ship, y, x)

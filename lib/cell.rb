@@ -24,6 +24,10 @@ class Cell
     @state = STATES[:miss]
   end
 
+  def miss?
+    @state == STATES[:miss]
+  end
+
   def hit!
     if ship?
       @state = STATES[:hit]
@@ -31,6 +35,10 @@ class Cell
     else
       @state = STATES[:miss]
     end
+  end
+
+  def to_s
+    @state
   end
 
   private
