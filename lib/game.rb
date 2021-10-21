@@ -1,13 +1,14 @@
 class Game
   def self.build
-    board = Board.new
+    player = Player.build
+    player2 = Player.build
   end
 
-  def initialize(board)
-    board = board
+  def initialize(player, player2)
+    @player = player
+    @player2 = player2
   end
 
   def start
-
   end
 end
