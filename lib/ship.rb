@@ -13,7 +13,7 @@ class Ship
   def hit!
     fail('Ship has already been sunk') if @hit_times.zero?
 
-    @hit_times += 1
+    @hit_times -= 1
   end
 
   def sunk?

@@ -1,8 +1,9 @@
 require 'spec_helper'
 require 'board'
+require 'cell'
 
 describe Board do
-  let(:board) { described_class.new(fleet, 10) }
+  let(:board) { described_class.new(Cell, fleet, 10) }
 
   let(:fleet) do
      {
@@ -28,22 +29,22 @@ describe Board do
     it "places a carrier ship correctly" do
       board.place_ship(:carrier, y: 5, x: 2)
 
-      expect(board.grid[4][2]).to eq nil
-      expect(board.grid[5][2]).to eq carrier
-      expect(board.grid[6][2]).to eq carrier
-      expect(board.grid[7][2]).to eq carrier
-      expect(board.grid[8][2]).to eq carrier
-      expect(board.grid[9][2]).to eq carrier
+      expect(board.grid[4][2].empty?).to eq true
+      expect(board.grid[5][2].ship).to eq carrier
+      expect(board.grid[6][2].ship).to eq carrier
+      expect(board.grid[7][2].ship).to eq carrier
+      expect(board.grid[8][2].ship).to eq carrier
+      expect(board.grid[9][2].ship).to eq carrier
     end
 
     it "places a battleship correctly" do
       board.place_ship(:battleship, y: 0, x: 5)
 
-      expect(board.grid[0][4]).to eq nil
-      expect(board.grid[0][5]).to eq battleship
-      expect(board.grid[0][6]).to eq battleship
-      expect(board.grid[0][7]).to eq battleship
-      expect(board.grid[0][8]).to eq battleship
+      expect(board.grid[0][4].empty?).to eq true
+      expect(board.grid[0][5].ship).to eq battleship
+      expect(board.grid[0][6].ship).to eq battleship
+      expect(board.grid[0][7].ship).to eq battleship
+      expect(board.grid[0][8].ship).to eq battleship
     end
   end
 
@@ -53,7 +54,7 @@ describe Board do
         .to raise_error('x: 2, y: 6, the ship will be out of boundaries')
     end
 
-    it "allows only the permitted number of placements based on the fleet number" do
+    it "allows only the permitted number of placements based on the fleet capacity" do
       board.place_ship(:carrier, y: 1, x: 1)
 
       expect { board.place_ship(:carrier, y: 1, x: 1) }

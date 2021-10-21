@@ -8,7 +8,12 @@ class Player
     @board = board
   end
 
-  def start
+  def attack(opponent)
+    input_coords = gets('enter coordinates x, y')
+    opponent.board.hit!(input_coords)
+  end
 
+  def winner?
+    false
   end
 end
