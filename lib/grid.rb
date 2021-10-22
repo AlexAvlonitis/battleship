@@ -5,8 +5,6 @@ class Grid
   extend Forwardable
   def_delegator :grid, :each
 
-  attr_reader :grid
-
   def initialize(grid_size, cell_klass)
     @grid_size = grid_size
     @cell_klass = cell_klass
@@ -31,7 +29,7 @@ class Grid
 
   private
 
-  attr_reader :cell_klass, :grid_size
+  attr_reader :cell_klass, :grid_size, :grid
 
   # grid_size * grid_size
   def initialize_grid
