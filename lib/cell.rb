@@ -1,11 +1,12 @@
 class Cell
   STATES = {
-    miss: 'x',
-    hit: 'o',
-    empty: '-'
+    miss: 'xx',
+    hit: 'oo',
+    empty: '--'
   }
 
   attr_accessor :ship
+  attr_reader :state
 
   def initialize
     @state = STATES[:empty]
@@ -37,13 +38,7 @@ class Cell
     end
   end
 
-  def to_s
-    @state
-  end
-
-  private
-
   def ship?
-    !!(@ship)
+    !!(ship)
   end
 end

@@ -16,8 +16,8 @@ class Board
     @grid = initialize_grid
   end
 
-  def place_ship(ship_name, y, x)
-    ship = fleet.to_battle(ship_name)
+  def place_ship(ship_name, y, x, direction)
+    ship = fleet.to_battle(ship_name, direction)
     fail('All ships have been deployed') if fleet.all_deployed?
     fail('Add a different ship') unless ship
 
@@ -27,7 +27,7 @@ class Board
 
   def hit(y, x)
     cell = grid[y][x]
-    return cell.miss! if cell.empty?
+    return cell.miss! if cell.empty? && !cell.ship?
 
     fail("x: #{x}, y: #{y} has already been hit successfully") if cell.hit?
     fail("x: #{x}, y: #{y} has already been hit and missed") if cell.miss?

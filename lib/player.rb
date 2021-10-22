@@ -17,17 +17,21 @@ class Player
     @name = name
   end
 
-  def place_ship(ship_name, y, x)
-    board.place_ship(ship_name, y, x)
+  def place_ship(ship_name, y, x, direction)
+    board.place_ship(ship_name, y, x, direction)
   end
 
   def attack(opponent, y, x)
     opponent.board.hit(y, x)
-    render_own_board(board.grid)
-    render_opponents_board(opponent.board.grid)
+    render_boards(opponent)
   end
 
   def lost?
     false
+  end
+
+  def render_boards(opponent)
+    render_own_board(name, board.grid)
+    render_opponents_board(opponent.name, opponent.board.grid)
   end
 end

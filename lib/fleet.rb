@@ -1,5 +1,3 @@
-require 'pry'
-
 class Fleet
   def self.build
     new(build_fleet)
@@ -41,14 +39,15 @@ class Fleet
     @deployed = []
   end
 
-  def to_battle(ship_name)
+  def to_battle(ship_name, direction)
     ship = fleet[ship_name.to_sym].pop
+    ship.direction = direction
     @deployed << ship
     ship
   end
 
   def all_deployed?
-    fleet.all? { |name, group| group.empty? }
+    @deployed.size == @fleet_size
   end
 
   private

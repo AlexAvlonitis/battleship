@@ -2,6 +2,7 @@ class Ship
   DIRECTIONS = [:vertical, :horizontal].freeze
 
   attr_reader :size, :name
+  attr_accessor :direction
 
   def initialize(size, name, direction = nil)
     @size = size
@@ -27,8 +28,4 @@ class Ship
   def horizontal?
     direction == :horizontal
   end
-
-  private
-
-  attr_reader :direction
 end
