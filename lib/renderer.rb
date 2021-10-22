@@ -10,6 +10,7 @@ module Renderer
       result += "\n"
     end
     puts result
+    puts
   end
 
   def render_opponents_board(name, grid)
@@ -36,5 +37,6 @@ module Renderer
     puts "Successful hit: 'oo'"
     puts "Empty cell: '--'"
     puts "===================="
+    puts
   end
 end
