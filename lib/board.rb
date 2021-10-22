@@ -3,7 +3,7 @@ require_relative 'ship'
 require_relative 'fleet'
 
 class Board
-  attr_reader :grid
+  attr_reader :grid, :fleet
 
   def self.build(grid_size = 10)
     new(Cell, Fleet.build, grid_size)
@@ -29,15 +29,15 @@ class Board
     cell = grid[y][x]
     return cell.miss! if cell.empty? && !cell.ship?
 
-    fail("x: #{x}, y: #{y} has already been hit successfully") if cell.hit?
-    fail("x: #{x}, y: #{y} has already been hit and missed") if cell.miss?
+    return puts("x: #{x}, y: #{y} has already been hit successfully, you lost your turn") if cell.hit?
+    return puts("x: #{x}, y: #{y} has already been hit and missed, you lost your turn") if cell.miss?
 
     cell.hit!
   end
 
   private
 
-  attr_reader :grid_size, :fleet, :cell_klass
+  attr_reader :grid_size, :cell_klass
 
   # grid_size * grid_size
   def initialize_grid

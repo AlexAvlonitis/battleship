@@ -27,7 +27,7 @@ class Player
   end
 
   def lost?
-    false
+    board.fleet.all_sunk?
   end
 
   def render_boards(opponent)

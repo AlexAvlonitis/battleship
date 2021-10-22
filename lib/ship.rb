@@ -15,6 +15,7 @@ class Ship
     fail('Ship has already been sunk') if sunk?
 
     @lives -= 1
+    puts "#{name} sunk!" if sunk?
   end
 
   def sunk?

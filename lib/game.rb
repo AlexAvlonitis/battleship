@@ -16,19 +16,23 @@ class Game
   end
 
   def start
-    until winner? do
+    until any_loser? do
       next_turn!
-      y, x = input_coords
-      next_player.attack(opponent, y, x)
+      next_player.attack(opponent, *input_coords)
     end
+    puts "#{winner} won!"
   end
 
   private
 
   attr_reader :next_player
 
-  def winner?
+  def any_loser?
     [player, player2].any?(&:lost?)
+  end
+
+  def winner
+    [player, player2].reject(&:lost?).first.name
   end
 
   def next_turn!

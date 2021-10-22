@@ -50,6 +50,10 @@ class Fleet
     @deployed.size == @fleet_size
   end
 
+  def all_sunk?
+    @deployed.all?(&:sunk?)
+  end
+
   private
 
   attr_reader :fleet
