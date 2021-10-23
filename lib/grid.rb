@@ -11,20 +11,26 @@ class Grid
     @grid = initialize_grid
   end
 
-  def place_ship_vertically(ship, y, x)
-    boundaries_checks(ship, y, x)
+  def place_ship_vertically(ship, row, col)
+    boundaries_checks(ship, row, col)
 
-    ship.size.times { |n| cell(y: y + n, x: x).ship = ship }
+    ship.size.times do |n|
+      cell = cell(row: row + n, col: col)
+      cell.ship = ship
+    end
   end
 
-  def place_ship_horizontally(ship, y, x)
-    boundaries_checks(ship, y, x)
+  def place_ship_horizontally(ship, row, col)
+    boundaries_checks(ship, row, col)
 
-    ship.size.times { |n| cell(y: y, x: x + n).ship = ship }
+    ship.size.times do |n|
+      cell = cell(row: row, col: col + n)
+      cell.ship = ship
+    end
   end
 
-  def cell(y:, x:)
-    grid[y][x]
+  def cell(row:, col:)
+    grid[row][col]
   end
 
   private
@@ -36,30 +42,32 @@ class Grid
     Array.new(grid_size) { Array.new(grid_size) { cell_klass.new } }
   end
 
-  def boundaries_checks(ship, y, x)
-    raise_out_of_bound_err(x, y) if !within_boundaries?(x, ship.size)
-    raise_occupied_cell_err(x, y) if cells_occupied?(x, y, ship)
+  def boundaries_checks(ship, row, col)
+    raise_out_of_bound_err(ship, row, col) if !within_boundaries?(row, col, ship)
+    raise_occupied_cell_err(ship, row, col) if cells_occupied?(row, col, ship)
   end
 
-  def raise_out_of_bound_err(x, y)
-    fail("x: #{x}, y: #{y}, the ship will be out of boundaries")
+  def raise_out_of_bound_err(ship, row, col)
+    fail("#{ship.name}, row: #{row}, col: #{col}, the ship is out of boundaries")
   end
 
-  def raise_occupied_cell_err(x, y)
-    fail("x: #{x}, y: #{y}, the cells are occupied")
+  def raise_occupied_cell_err(ship, row, col)
+    fail("#{ship.name}, row: #{row}, col: #{col}, the cells are occupied")
   end
 
-  def within_boundaries?(coord, ship_size)
-    (grid_size - coord) >= ship_size
+  def within_boundaries?(row, col, ship)
+    coord  = ship.vertical? ? row : col
+
+    (grid_size - coord) >= ship.size
   end
 
-  def cells_occupied?(x, y, ship)
+  def cells_occupied?(row, col, ship)
     result = []
     if ship.vertical?
-      ship.size.times { |n| result << cell(y: y, x: x + n) }
+      ship.size.times { |n| result << cell(row: row + n, col: col) }
     else
-      ship.size.times { |n| result << cell(y: y + n, x: x) }
+      ship.size.times { |n| result << cell(row: row, col: col + n) }
     end
-    result.none?(&:empty?)
+    result.any?(&:ship?)
   end
 end

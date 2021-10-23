@@ -8,7 +8,8 @@ class Board
 
   def self.build(grid_size = 10)
     grid = Grid.new(grid_size, Cell)
-    new(Fleet.build, grid)
+
+    new(Fleet.new, grid)
   end
 
   def initialize(fleet, grid)
@@ -16,40 +17,30 @@ class Board
     @grid = grid
   end
 
-  def place_ship(ship_name, y, x, direction)
-    ship = fleet.to_battle(ship_name, direction)
-    empty_ship_err unless ship
-    all_deployed_err if fleet.all_deployed?
+  def place_ship(ship, row, col)
+    fleet.to_battle(ship)
 
-    grid.place_ship_vertically(ship, y, x) if ship.vertical?
-    grid.place_ship_horizontally(ship, y, x) if ship.horizontal?
+    grid.place_ship_vertically(ship, row, col) if ship.vertical?
+    grid.place_ship_horizontally(ship, row, col) if ship.horizontal?
   end
 
-  def hit(y, x)
-    cell = grid.cell(y: y, x: x)
+  def hit(row, col)
+    cell = grid.cell(row: row, col: col)
     return cell.miss! if cell.empty? && !cell.ship?
 
-    return cell_hit_message(x, y) if cell.hit?
-    return cell_missed_message(x, y) if cell.miss?
+    return cell_hit_message(row, col) if cell.hit?
+    return cell_missed_message(row, col) if cell.miss?
 
     cell.hit!
   end
 
   private
 
-  def all_deployed_err
-    fail('All ships have been deployed')
+  def cell_hit_message(row, col)
+    puts("row: #{row}, col: #{col} has already been hit successfully, you lost your turn")
   end
 
-  def empty_ship_err
-    fail('Add a different ship')
-  end
-
-  def cell_hit_message(x, y)
-    puts("x: #{x}, y: #{y} has already been hit successfully, you lost your turn")
-  end
-
-  def cell_missed_message(x, y)
-    puts("x: #{x}, y: #{y} has already been hit and missed, you lost your turn")
+  def cell_missed_message(row, col)
+    puts("row: #{row}, col: #{col} has already been hit and missed, you lost your turn")
   end
 end

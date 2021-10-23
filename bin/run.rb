@@ -7,17 +7,9 @@ game.player.name = 'Alex'
 game.player2.name = 'Neo'
 
 [game.player, game.player2].each do |player|
-  STARTER_BOARDS.each do |carrier, battleship, cruiser|
-    carrier.each do |c|
-      player.place_ship(c[:ship], c[:col], c[:row], c[:direction])
-    end
-
-    battleship.each do |b|
-      player.place_ship(b[:ship], b[:col], b[:row], b[:direction])
-    end
-
-    cruiser.each do |c|
-      player.place_ship(c[:ship], c[:col], c[:row], c[:direction])
+  STARTER_BOARDS.each do |ships|
+    ships.each do |ship|
+      player.place_ship(ship[:ship], ship[:row], ship[:col])
     end
   end
 end

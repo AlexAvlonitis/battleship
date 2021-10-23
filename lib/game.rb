@@ -41,7 +41,7 @@ class Game
 
   def input_coords
     puts "#{next_player.name}'s turn"
-    print 'Enter col, row coordinates e.g 1,1: '
+    print 'Enter row, col coordinates e.g 1,1: '
     coords = gets.chomp
     coords.split(',').map(&:to_i)
   end
