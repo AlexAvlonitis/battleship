@@ -32,6 +32,7 @@ module Renderer
   end
 
   def render_instructions
+    puts
     puts "===================="
     puts "Hit and miss: 'xx'"
     puts "Successful hit: 'oo'"
