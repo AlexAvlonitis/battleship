@@ -21,7 +21,7 @@ class Client
       loop do
         puts 'Awaiting for players'
         sleep 1
-        system 'clear'
+        clear_screen
 
         if game.enough_players?
           until game.any_loser? do
@@ -31,7 +31,7 @@ class Client
               player.attack(game.opponent, *player.input_coords)
               game.next_turn!
             else
-              system 'clear'
+              clear_screen
               puts 'Waiting for opponents turn'
             end
           end
@@ -55,6 +55,14 @@ class Client
           player.place_ship(s, ship[:row], ship[:col])
         end
       end
+    end
+    
+    def clear_screen
+      windows? ? system('cls') : system('clear')
+    end
+
+    def windows?
+      (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
     end
   end
 end
