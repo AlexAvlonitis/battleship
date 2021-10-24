@@ -4,7 +4,7 @@ require_relative './starter_boards'
 
 class Client
   class << self
-    HOST = 'locahost'
+    HOST = 'localhost'
     PORT = '2000'
     SERVER_URI = "druby://#{HOST}:#{PORT}"
 
