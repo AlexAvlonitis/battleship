@@ -1,6 +1,17 @@
-# BATTLESHIP
-Quick and dirty battleship game in ruby. 2 players take turns on the same console to sink each others ships. [battleship (wikipedia)](https://en.wikipedia.org/wiki/Battleship_(game))
+
+![battleship](battleship.png)
+
+Quick and dirty console battleship game in ruby. 2 players take turns to sink each others ships. [battleship (wikipedia)](https://en.wikipedia.org/wiki/Battleship_(game))
+
+```ruby
+# run the server
+ruby bin/run_server.rb
+
+# run 2 times, on separate terminals
+ruby bin/run_client.rb
+```
 
 ## Improvements
-- create server-clients socket connection in order to use separate consoles
-- tidy up some of the code and console text layout
+- [x] Create main server, with clients run on separate consoles using ruby distributed object system.
+- [ ] Handle client disconnects on the server
+- [ ] tidy up some of the code and console text layout

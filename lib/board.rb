@@ -2,8 +2,10 @@ require_relative 'cell'
 require_relative 'ship'
 require_relative 'fleet'
 require_relative 'grid'
+require 'drb'
 
 class Board
+  include DRb::DRbUndumped
   attr_reader :grid, :fleet
 
   def self.build(grid_size = 10)

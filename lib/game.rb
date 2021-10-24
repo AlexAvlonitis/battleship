@@ -1,52 +1,42 @@
 require_relative 'player'
 
 class Game
-  attr_reader :player, :player2
+  PLAYERS_LIMIT = 2
 
-  def self.build
-    player = Player.build
-    player2 = Player.build
-    new(player, player2)
+  attr_reader :players
+
+  def initialize
+    @players = []
   end
 
-  def initialize(player, player2)
-    @player = player
-    @player2 = player2
-    @next_player = player
+  def add_player(player)
+    return puts 'players limit reached, start game.' if enough_players?
+
+    @players << player
+    puts "player added #{players[-1]}"
   end
 
-  def start
-    until any_loser? do
-      next_turn!
-      next_player.attack(opponent, *input_coords)
-    end
-    puts "#{winner} won!"
+  def next_player
+    players[0]
   end
 
-  private
-
-  attr_reader :next_player
+  def enough_players?
+    PLAYERS_LIMIT == players.count
+  end
 
   def any_loser?
-    [player, player2].any?(&:lost?)
-  end
-
-  def winner
-    [player, player2].reject(&:lost?).first.name
+    players.any?(&:lost?)
   end
 
   def next_turn!
-    @next_player = opponent
+    players.reverse!
   end
 
-  def input_coords
-    puts "\n#{next_player.name}'s turn"
-    print 'Enter row, col coordinates e.g 1,1: '
-    coords = gets.chomp
-    coords.split(',').map(&:to_i)
+  def winner
+    players.reject(&:lost?)[0].name
   end
 
   def opponent
-    next_player == player ? player2 : player
+    players[-1]
   end
 end

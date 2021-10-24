@@ -7,9 +7,9 @@ class Player
   attr_reader :board
   attr_accessor :name
 
-  def self.build
+  def self.build(name = "tester")
     board = Board.build
-    new(board, 'Tester')
+    new(board, name)
   end
 
   def initialize(board, name)
@@ -28,6 +28,13 @@ class Player
 
   def lost?
     board.fleet.all_sunk?
+  end
+
+  def input_coords
+    enter_coords_text(name)
+
+    coords = gets.chomp
+    coords.split(',').map(&:to_i)
   end
 
   def render_boards(opponent)

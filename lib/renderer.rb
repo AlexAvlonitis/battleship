@@ -5,7 +5,7 @@ module Renderer
     result = ''
     grid.each do |row|
       row.each do |cell|
-        result += "| #{ cell.ship? ? ship_abbr(cell) : cell.state } |"
+        result += "| #{render_state(cell)} |"
       end
       result += "\n"
     end
@@ -25,7 +25,27 @@ module Renderer
     puts result
   end
 
+  def enter_coords_text(name)
+    puts "\n#{name}'s turn"
+    print 'Enter row, col coordinates e.g 1,1: '
+  end
+
+  def you_won
+    "YOU WON :)"
+  end
+
+  def you_lost
+    "YOU LOST :("
+  end
+
   private
+
+  def render_state(cell)
+    return cell.state if cell.ship? && cell.hit?
+    return ship_abbr(cell) if cell.ship?
+
+    cell.state
+  end
 
   def ship_abbr(cell)
     cell.ship.name.slice(0..1)
