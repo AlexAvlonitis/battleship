@@ -19,7 +19,7 @@ class Client
       game.add_player(player)
 
       loop do
-        puts 'Awaiting for players'
+        puts 'Awaiting for players to join...'
         sleep 1
         clear_screen
 
@@ -28,11 +28,11 @@ class Client
             sleep 1
             if player.name == game.next_player.name
               player.render_boards(game.opponent)
-              player.attack(game.opponent, *player.input_coords)
+              player.attack(game.opponent)
               game.next_turn!
             else
               clear_screen
-              puts 'Waiting for opponents turn'
+              puts 'Waiting opponent\'s turn'
             end
           end
 
@@ -56,7 +56,7 @@ class Client
         end
       end
     end
-    
+
     def clear_screen
       windows? ? system('cls') : system('clear')
     end

@@ -21,8 +21,8 @@ class Player
     board.place_ship(ship, row, col)
   end
 
-  def attack(opponent, row, col)
-    opponent.board.hit(row, col)
+  def attack(opponent)
+    opponent.board.hit(*input_coords)
     render_boards(opponent)
   end
 
