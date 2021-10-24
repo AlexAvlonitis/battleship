@@ -10,7 +10,7 @@ class Game
   end
 
   def add_player(player)
-    return puts 'players limit reached, start game.' if enough_players?
+    return puts 'Players limit reached' if enough_players?
 
     @players << player
     puts "player added #{players[-1]}"

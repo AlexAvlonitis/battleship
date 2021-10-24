@@ -1,8 +1,8 @@
 class Cell
   STATES = {
-    miss: 'xx',
-    hit: 'oo',
-    empty: '--'
+    miss: 'x',
+    hit: 'o',
+    empty: '-'
   }
 
   attr_accessor :ship
