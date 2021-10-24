@@ -3,7 +3,7 @@ require_relative './game'
 
 class Server
   class << self
-    HOST = 'locahost'
+    HOST = 'localhost'
     PORT = '2000'
     URI = "druby://#{HOST}:#{PORT}"
     FRONT_OBJECT = Game.new
